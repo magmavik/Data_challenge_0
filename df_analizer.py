@@ -1,3 +1,8 @@
+#   Program for analyzing COVID-19 dataframes from github.
+#
+#   Dev:    Luca Malucelli
+#   Ctc:    luca.malucelli@studenti.unimi.it
+
 import numpy as np
 import pandas as pd
 import re
