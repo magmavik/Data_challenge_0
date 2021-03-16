@@ -1,3 +1,12 @@
+#   Program for analizing COVID-19 dataframes from github.
+#
+#   Dev:    Luca Malucelli, Lorenzo Magnoni
+#   Ctc:    luca.malucelli@studenti.unimi.it
+
+
+
+import sys
+
 import numpy as np
 import pandas as pd
 import re
@@ -8,19 +17,16 @@ df = pd.read_csv('output.csv')
 df['data'] = pd.to_datetime(df['data']).dt.date
 
 province = dict()
-province['milano'] = []
-province['campobasso'] = []
-province['alessandria'] = []
-province['pavia'] = []
-# campobasso = []
-# milano = []
 date = []
 
-# campobasso = df.loc[df['denominazione_provincia'].str.contains('campobasso', flags = re.I, regex = True)]['totale_casi'].tolist()
-date = df.loc[df['denominazione_provincia'].str.contains('campobasso', flags = re.I, regex = True)]['data'].tolist()
+for arg in sys.argv[1:]:
+    province[str(arg)] = []     #creating a dictionary with the arguments passed as keys
+
+
+date = df.loc[df['denominazione_provincia'].str.contains('campobasso', flags = re.I, regex = True)]['data'].tolist()    #date list
 
 for key, val in province.items():
-    val = df.loc[df['denominazione_provincia'].str.contains(key, flags = re.I, regex = True)]['totale_casi'].tolist()
+    val = df.loc[df['denominazione_provincia'].str.contains(key, flags = re.I, regex = True)]['totale_casi'].tolist()   #positive list
     for i in range(1, len(val))[::-1]:
         val[i] -= val[i-1]
     province[key] = val
