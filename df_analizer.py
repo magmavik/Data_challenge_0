@@ -30,9 +30,9 @@ for key, val in province.items():
     for i in range(1, len(val))[::-1]:
         val[i] -= val[i-1]
     province[key] = val
-    plt.plot(date, val, label=key)
+    plt.plot(date, val, label=df.loc[df['denominazione_provincia'].str.contains(key, flags = re.I, regex = True)]['denominazione_provincia'].tolist()[0])
 
-print(province)
+# print(province)
 plt.gcf().autofmt_xdate()
 
 date_format = mpl_dates.DateFormatter('%d %b %Y')
