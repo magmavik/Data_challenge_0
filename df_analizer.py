@@ -21,9 +21,11 @@ date = []
 
 for arg in sys.argv[1:]:
     province[str(arg)] = []     #creating a dictionary with the arguments passed as keys
-#for jupyter
+
+    #for jupyter
 #province_scelte = [insert choosen province]
-#province[str(province_scelte)] = []
+#for pr in province_scelte:
+    #province[pr] = []
     
     
 
