@@ -21,9 +21,13 @@ date = []
 
 for arg in sys.argv[1:]:
     province[str(arg)] = []     #creating a dictionary with the arguments passed as keys
+#for jupyter
+#province_scelte = [insert choosen province]
+#province[str(province_scelte)] = []
+    
+    
 
-
-date = df.loc[df['denominazione_provincia'].str.contains('campobasso', flags = re.I, regex = True)]['data'].tolist()    #date list
+date = df['data'].drop_duplicates    #date list
 
 for key, val in province.items():
     val = df.loc[df['denominazione_provincia'].str.contains(key, flags = re.I, regex = True)]['totale_casi'].tolist()   #positive list
