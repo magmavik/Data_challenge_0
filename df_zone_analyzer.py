@@ -30,6 +30,12 @@ val = df.loc[df['denominazione_regione'].str.contains(regione, flags = re.I, reg
 
 for i in range(1, len(val))[::-1]:
     val[i] -= val[i-1]
+for i in range(1, len(val)-2, 3):
+    trio = np.array([val[i], val[i+1], val[i+2]])
+    m = np.mean(trio)
+    val[i] = m
+    val[i+1] = m
+    val[i+2] = m
     
 date.pop(0) #removing first problematic value
 val.pop(0)
