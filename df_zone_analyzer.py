@@ -16,20 +16,25 @@ from matplotlib import dates as mpl_dates
 df = pd.read_csv('output.csv')
 df['data'] = pd.to_datetime(df['data']).dt.date
 
-# regioni = dict()
-date = []
+regioni = df['denominazione_regione'].tolist()
+regioni = list(dict.fromkeys(regioni))
+#print(regioni)
+regione = regioni[1]
 
-# for arg in sys.argv[1:]:
-#     regioni[str(arg)] = []     #creating a dictionary with the arguments passed as keys
+df = df[df['data'] > pd.to_datetime('2020-12-15').date() ]
 
-regione = sys.argv[1]
+date = df['data'].tolist() #date list
+date = list(dict.fromkeys(date))
+print(date)
 
-
-date = df.loc[df['denominazione_regione'].str.contains(regione, flags = re.I, regex = True)]['data'].tolist()    #date list
 
 val = df.loc[df['denominazione_regione'].str.contains(regione, flags = re.I, regex = True)]['totale_casi'].tolist()   #positive list
+
 for i in range(1, len(val))[::-1]:
     val[i] -= val[i-1]
+    
+date.pop(0) #removing first problematic value
+val.pop(0)
 regione_plot = plt.bar(date, val)
 
 for i in range(1, len(val)):
