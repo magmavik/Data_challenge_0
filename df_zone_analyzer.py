@@ -18,14 +18,12 @@ df['data'] = pd.to_datetime(df['data']).dt.date
 
 regioni = df['denominazione_regione'].tolist()
 regioni = list(dict.fromkeys(regioni))
-#print(regioni)
 regione = regioni[1]
 
 df = df[df['data'] > pd.to_datetime('2020-12-15').date() ]
 
 date = df['data'].tolist() #date list
 date = list(dict.fromkeys(date))
-print(date)
 
 
 val = df.loc[df['denominazione_regione'].str.contains(regione, flags = re.I, regex = True)]['totale_casi'].tolist()   #positive list
