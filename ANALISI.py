@@ -28,6 +28,7 @@ date = list(dict.fromkeys(date))
 #date = [x - timedelta(days = 1) for x in date]
 
 data_regioni = dict()
+
 passings = dict() #passings from yellow to orange/red
 
 for reg in regioni:
@@ -43,7 +44,11 @@ for reg in regioni:
         val[i+1] = m
         val[i+2] = m
 
-    passings[reg] = []
+    
+    df_merge = pd.DataFrame (list(zip(date, val,col)) ,columns=['date','dati_gionalieri','colore'])
+    data_regioni[reg] = df_merge
+
+    #passings[reg] = []
     for i in range(0, len(val)-1):
         if (col[i] == 'giallo') & ((col[i+1] == 'arancione') | (col[i+1] == 'rosso')):
             passings[reg].append(i)
