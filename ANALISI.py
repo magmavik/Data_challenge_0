@@ -29,6 +29,8 @@ date = list(dict.fromkeys(date))
 
 data_regioni = dict()
 
+passings = dict() #passings from yellow to orange/red
+
 for reg in regioni:
     val = df.loc[df['denominazione_regione'].str.contains(str(reg), flags = re.I, regex = True)]['totale_casi'].tolist()
     col = df.loc[df['denominazione_regione'].str.contains(str(reg), flags = re.I, regex = True)]['colore'].tolist()
@@ -41,11 +43,34 @@ for reg in regioni:
         val[i] = m
         val[i+1] = m
         val[i+2] = m
+
     
     df_merge = pd.DataFrame (list(zip(date, val,col)) ,columns=['date','dati_gionalieri','colore'])
     data_regioni[reg] = df_merge
-    
 
+    #passings[reg] = []
+    for i in range(0, len(val)-1):
+        if (col[i] == 'giallo') & ((col[i+1] == 'arancione') | (col[i+1] == 'rosso')):
+            passings[reg].append(i)
 
+    df_merge = pd.DataFrame (list(zip(date, val,col)), columns=['date','dati_giornalieri','colore'])
+    data_regioni[reg] = df_merge
 
+# prova = data_regioni['Lombardia']
+# prova = prova['dati_giornalieri'].tolist()
+# date.pop(0) #removing first problematic value
+# cazzo.pop(0)
+# regione_plot = plt.bar(date, prova)
 
+# plt.gcf().autofmt_xdate()
+
+# date_format = mpl_dates.DateFormatter('%d %b %Y')
+
+# plt.gca().xaxis.set_major_formatter(date_format)
+
+# plt.xlabel('Data')
+# plt.ylabel('Casi giornalieri')
+
+# plt.title('Lombardia')
+
+# plt.show()
